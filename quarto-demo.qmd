@@ -1,0 +1,103 @@
+---
+title: "Quarto"
+subtitle: "What is it? Why, who, and how might we use it?"
+author: "Nicole Harty, MPH"
+format:
+  revealjs: 
+    slide-number: true
+    chalkboard: 
+      buttons: false
+    preview-links: auto
+    theme: black
+    logo: images/logo-quarto.png
+    footer: '[https://www.quarto.org](https://www.quarto.org)'
+---
+
+## What  
+
+- Quarto is an open-source publishing system that allows you to combine text, images, code, plots, and tables in a fully-reproducible document.  
+
+## Why?  
+
+- Reporting is a necessity. Many of us have placed our analysis in a report, cycled through multiple iterations, and finally sent it off to stakeholders.  
+  - You find an error. Why does that error exist?  
+  - You changed something last month. Turns our you like that better and want to go back in time.  
+  - You need to refresh the analysis months later. You need to repeat your original steps **exactly**.  
+
+- You write lots of reports with similar structure. You already use a template, but you still find yourself doing a lot of copy-paste.  
+
+## Why?  
+
+- *Your closest collaborator is you 6 months ago.*  
+
+- You don't code much. You don't want a workflow that requires you to write code all the time.  
+
+## Who?     
+
+- You!  
+  - Already work in R.  
+  - Work on projects with similarities in analysis or reporting.  
+  
+- Me!
+  - Work smarter not harder.  
+  
+- Us!  
+  - Want to do impactful public health work without tedious manual work.  
+  - With our powers combined.  
+  ![](images/captain-planet.gif)
+
+## How?   
+
+- [Parameterized reports](https://quarto.org/docs/computations/parameters.html) produce analysis with the click of a button. You could... 
+  - Show results for a specific geographic location.
+  - Run a report that covers a specific time period.
+  - Run a single analysis multiple times for different assumptions.
+- Repeated values  
+  - Instead of typing the same information multiple times, use a dynamic variable. 
+  - Only need to enter the value once and repeatedly reference. Ease maintenance. Reduce the likelihood of an error with your documents. 
+  - Calculate numbers within text  
+
+
+# Examples   
+  
+  
+{{< fa wand-magic-sparkles size=5x >}} 
+
+## AU Feedback Reports  
+
+Parameterized reports: tailor specific data elements to data for a specific facility.    
+
+## HAI Annual Report   
+
+Multiple formats of the same report.  
+Extensive use of repeated values, cross-references, calculations within text.  
+
+- [Google doc](https://docs.google.com/document/d/1zh4qwqhrC_xWoOCSbOB0VffPdNJzN--n/edit?rtpof=true&tab=t.0) {{< fa pen-to-square >}}    
+- [HTML report](https://cdphe-data.shinyapps.io/HAI-annual-report/) {{< fa share-from-square >}}  
+
+## Tabsets {.smaller}
+
+::: panel-tabset
+### Plot
+
+```{r}
+library(ggplot2)
+ggplot(mtcars, aes(hp, mpg, color = am)) +
+  geom_point() +
+  geom_smooth(formula = y ~ x, method = "loess")
+```
+
+### Data
+
+```{r}
+knitr::kable(mtcars)
+```
+:::
+
+## What's Next?  
+
+- Brainstorm use cases for Quarto.  
+  - Outbreak reports  
+  - Ongoing exploratory analysis  
+- Opportunity for NHSN Data Unit to collaborate with EI or P&R?
+
