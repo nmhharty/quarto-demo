@@ -16,48 +16,47 @@ format:
 ## What  
 
 - Quarto is an open-source publishing system that allows you to combine text, images, code, plots, and tables in a fully-reproducible document.  
+  
 - No more copy-paste, no more manually rebuilding analyses from disparate components, no more dread when the data is updated and you need to run an analysis.
 
 ## Why?  
 
-- Reporting is a necessity. Many of us have placed our analysis in a report, cycled through multiple iterations, and finally sent it off to stakeholders.  
+- Reporting is a necessity. The workflow is often put analysis in a report, cycle through multiple iterations, and finally send it off to stakeholders. And then...  
   - You find an error. Why does that error exist?  
   - You changed a few things last month. Now you want to go back revert one of those changes.  
   - You need to refresh the analysis months later. You need to repeat your original steps **exactly**.  
-
-- You write lots of reports with similar structure. You already use a template, but you still find yourself doing a lot of copy-paste.  
+  
 
 ## Why?  
 
+- You write lots of reports with similar structure. You already use a template, but you still do a lot of copy-paste.  
+
 - You don't code much. You don't want a workflow that requires you to write code all the time.  
+  
 - You use various templates for different types of audiences (i.e. recommendation letter to different facility types, outbreak report for different organisms).  
+  
 - You want a standard look and feel to your reports but you dislike tedious formatting.  
 
-## Who?     
-- You!  
-  - Already work in R.  
-  - Want learn R.    
-  - Work on projects with similarities in analysis or reporting.  
-- Me!
-  - Work smarter not harder. 
-  
-:::: {.columns}
+# Who?     
 
-::: {.column width="70%"}
+## You!  
+- Already work in R.  
+- Want learn R.    
+- Work on projects with similarities in analysis or reporting.  
 
-- Us!  
-  - Want to do impactful public health work without tedious manual work.  
-  - With our powers combined.  
+## Me!  
+- Work smarter not harder. 
 
-:::
 
-::: {.column width="30%"}
-  
-  
-![](images/captain-planet.gif)
-:::
+## We!  
 
-::::
+
+- Want to do impactful public health work without tedious manual work.  
+
+
+- With our powers combined...
+
+![](images/captain-planet.gif)  
 
 
 ## How?   
@@ -65,11 +64,14 @@ format:
 - [Parameterized reports](https://quarto.org/docs/computations/parameters.html) produce analysis with the click of a button. You could... 
   - Show results for a specific geographic location.
   - Run a report that covers a specific time period.
-  - Run a single analysis multiple times for different assumptions.
+  - Run a single analysis multiple times for different assumptions.  
+  
+## How?  
 - Repeated values  
   - Instead of typing the same information multiple times, use a dynamic variable. 
-  - Ease maintenance. Reduce the likelihood of an error with your documents. 
-- Calculate numbers within text  
+  - Ease maintenance. Reduce the likelihood of an error with your documents.  
+   
+- Calculate numbers within narrative summaries    
 
 
 # Examples   
@@ -84,10 +86,28 @@ Parameterized reports: tailor specific data elements to data for a specific faci
 ## HAI Annual Report   
 
 Multiple formats of the same report.  
+  
 Extensive use of repeated values, cross-references, calculations within text.  
 
-- [Google doc](https://docs.google.com/document/d/1zh4qwqhrC_xWoOCSbOB0VffPdNJzN--n/edit?rtpof=true&tab=t.0) {{< fa pen-to-square >}}    
 - [HTML report](https://cdphe-data.shinyapps.io/HAI-annual-report/) {{< fa share-from-square >}}  
+- [Google doc](https://docs.google.com/document/d/1zh4qwqhrC_xWoOCSbOB0VffPdNJzN--n/edit?rtpof=true&tab=t.0) {{< fa pen-to-square >}}    
+
+## HAI Annual Report  [HTML report](https://cdphe-data.shinyapps.io/HAI-annual-report/) {{< fa file-code >}}     
+
+:::: {.columns}
+
+::: {.column width="55%"}
+
+![](images/report-code.png)
+
+:::
+
+::: {.column width="45%"}
+  
+![](images/report-echo.png)  
+:::
+
+::::
 
 ## HAI Annual Report  [HTML report](https://cdphe-data.shinyapps.io/HAI-annual-report/) {{< fa share-from-square >}}     
 
@@ -140,9 +160,23 @@ ggplot(mtcars, aes(hp, mpg, color = am)) +
 ```{r}
 knitr::kable(mtcars)
 ```
+
+### Code  
+```{r}
+#| echo: true
+#| eval: false
+library(ggplot2)
+ggplot(mtcars, aes(hp, mpg, color = am)) +
+  geom_point() +
+  geom_smooth(formula = y ~ x, method = "loess")
+
+knitr::kable(mtcars)
+
+```
+
 :::
 
-## What's Next?  
+## Now What?  
 
 - Brainstorm use cases for Quarto.  
   - Outbreak reports  
