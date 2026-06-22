@@ -81,7 +81,15 @@ format:
 
 ## AU Feedback Reports  
 
-Parameterized reports: tailor specific data elements to data for a specific facility.    
+Parameterized reports: tailor specific data elements to data for a specific facility.
+  - Before: Manual facility specific report updates
+  - Future:
+    - Same report template can be run for each facility using only the facility ID.
+    - Figures and narrative text update automatically from the data.
+    - Comparator groups can be changed, including region, bed size, and facility type.
+    - Reports can be rerun quickly when new NHSN data are available.
+    - Supports consistent reporting across facilities with less manual editing
+    
 
 ## HAI Annual Report   
 
