@@ -1,0 +1,183 @@
+
+# 🪄 Yes, but *HOW*?  
+
+## Components of a Quarto document  
+
+1. Metadata: YAML  
+2. Text: Markdown  
+3. Code: Executed via knitr or jupyter  
+
+## Metadata: YAML Header
+
+**"Yet Another Markup Language" or "YAML Ain't Markup Language"**  
+
+Use YAML to avoid manually typing out all the options, every time when rendering via the CLI:  
+
+``` {.yaml code-line-numbers="|3|5-6|7-8|9|12|18|22"}
+
+#| code-overflow: scroll
+---
+title: "Healthcare-Associated Infections (HAI) Annual Report"     
+date: today                                                       # Set date dynamically, format it  
+date-format: "MMMM YYYY"                                          
+toc: true                                                         # Create a table of contents 
+toc-depth: 2
+execute:                                                          # Decide if you want code to show in output 
+  echo: false
+  warning: false
+crossref:                                                         # Change default formatting of table headers  
+  tbl-title: "**Table**" # Changes prefix to bold
+  title-delim: "**:**"
+format: 
+  html:
+    code-fold: true 
+    brand: _brand.yml                                             # Use branding so output aligns with communications standards
+    embed-resources: true
+  docx: default
+  typst: default
+params:                                                           # Set parameters for each rendering  
+  current_year: "2025"
+  comparison_year: "2024"
+  report_year: "2026"
+  download_year: "2026"
+---
+```
+  
+  
+
+## Text: Markdown     
+
+::: {.panel-tabset}
+
+### Markdown Basics   
+
++-------------------------------+-------------------------------+
+| Markdown Syntax               | Output                        |
++===============================+===============================+
+| ```                           | *italics* and **bold**        |
+| *italics* and **bold**        |                               |
+| ```                           |                               |
++-------------------------------+-------------------------------+
+| ```                           | superscript^2^ / subscript~2~ |
+| superscript^2^ / subscript~2~ |                               |
+| ```                           |                               |
++-------------------------------+-------------------------------+
+| ```                           | ~~strikethrough~~             |
+| ~~strikethrough~~             |                               |
+| ```                           |                               |
++-------------------------------+-------------------------------+
+| ```                           | `verbatim code`               |
+| `verbatim code`               |                               |
+| ```                           |                               |
++-------------------------------+-------------------------------+  
+
+
+### Headings  
+
++-----------------+-----------------+
+| Markdown Syntax | Output          |
++=================+=================+
+| ```             | # Header 1      |
+| # Header 1      |                 |
+| ```             |                 |
++-----------------+-----------------+
+| ```             | ## Header 2     |
+| ## Header 2     |                 |
+| ```             |                 |
++-----------------+-----------------+
+| ```             | ### Header 3    |
+| ### Header 3    |                 |
+| ```             |                 |
++-----------------+-----------------+
+| ```             | #### Header 4   |
+| #### Header 4   |                 |
+| ```             |                 |
++-----------------+-----------------+
+| ```             | ##### Header 5  |
+| ##### Header 5  |                 |
+| ```             |                 |
++-----------------+-----------------+
+| ```             | ###### Header 6 |
+| ###### Header 6 |                 |
+| ```             |                 |
++-----------------+-----------------+
+
+:::  
+
+## Code: Executed via knitr or jupyter  
+
+````{.qmd  code-line-numbers="|1|2|3|5"}
+```{r}                                                   # create code chunk, specify language    
+#| label: setup                                          # give the code chunk a name, must be unique
+#| output: false                                         # specify execution behavior specific to the code chunk, override document defaults
+
+#load libraries                                          # write R code in chunk just like in R Markdown, just like R script
+library(flextable)
+library(googlesheets4)
+library(dplyr)
+library(glue)
+library(lubridate)
+library(purrr)
+
+# Load functions
+source("../Annual-HAI-Report/functions/flextable_function.R")
+source("../Annual-HAI-Report/functions/tbl_narrative_function.R")
+```
+````
+
+## Code: Executed via knitr or jupyter  
+
+````{.qmd  code-line-numbers="|2|5|10"}
+```{{r}}
+#| label: tbl-agg-CAUTI                                         # start label with "tbl" to denote it's a table ("fig" for figure)
+#| eval: false 
+#| output: false 
+#| tbl-cap: !expr glue("**Catheter-associated urinary tract     # give your table a name, can use markdown syntax for formatting
+infections in health care facilities by facility or unit type  
+— Colorado, Jan. 1, {params$current_year} - Dec. 31,                  
+{params$current_year}**")
+
+create_hai_summary_table(                                       # create your table (this uses custom function)   
+  df = agg_CAUTI, 
+  comp_year = comparison_year,
+  denom_type = "catheter-days",
+  suppress_num = 50
+)
+
+```
+````
+
+## Workflow Note: params
+
+1.  Write report template with default values hard-coded, and then render & review.
+
+2.  Set default `params` key-value pairs in YAML.
+
+3.  Replace hard-coded values with the `params` variables.
+
+4.  Render the single report and review.
+
+5.  Render extreme cases and review.
+
+6.  Render all variations of the report at once.
+
+
+# 🧑‍🏫 Demo 
+
+## Now what?  
+
+- Creating (and documenting) shared processes for authoring in Quarto  
+- Creating template Quarto documents for common report types  
+- Build presentation template that fully aligns to CDPHE branding  
+
+
+## Resources
+
+- [From R Markdown to Quarto](https://mine.quarto.pub/quarto-asa-nashville/): workshop to learn how to apply reproducible authoring skills to the Quarto format and learn about new tools and workflows for authoring with Quarto in RStudio.
+- [Awesome Quarto](https://github.com/mcanouil/awesome-quarto): the most up to date curated list of Quarto® docs, talks, tools, examples & articles the internet has to offer  
+- [No more copy and paste! Parameterized plots and reports with R and Quarto](https://github.com/nrennie/r-medicine-2026-parameterized-reports): R/Medicine 2026 conference workshop materials  
+- [Parameterized reporting with jupyter engine](https://opensource.posit.co/blog/2025-07-24_parameterized-reports-python/): transform a single Jupyter notebook into a parameterized report generator that automatically creates customized outputs for different scenarios     
+- [posit::conf(2025) Quarto workshop materials](https://opensource.posit.co/blog/2025-10-27_conf-workshops-materials/): materials from two workshops related to Quarto  
+- [PDF Acccessibility and Standards](https://opensource.posit.co/blog/2026-03-05_pdf-accessibility-and-standards/): Quarto 1.9 brings PDF accessibility and standards support, building on new tagging features in LaTeX and Typst  
+
+

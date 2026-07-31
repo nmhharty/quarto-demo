@@ -1,0 +1,35 @@
+---
+title: "Quarto"  
+subtitle: "What is it? Why, who, and how might we use it?<br>![](images/logo-quarto.png){width=5em}"
+author: "Nicole Harty August 27, 2026<br>NHSN Data Unit Manager<br>CDPHE Healthcare Associated Infections Program"
+logo: "images/logo-quarto.png"
+logo-alt: "Quarto logo"
+format:
+  revealjs: 
+    embed-resources: true
+    width: 1600
+    height: 900  
+    slide-number: true
+    theme: 
+      - brand
+    logo: images/logo-quarto.png
+    footer: '[https://www.quarto.org](https://www.quarto.org)'
+    highlight-style: a11y
+    transition: fade
+execute:
+  echo: true
+df-print: kable
+---
+
+{{< include 01-intro.qmd >}} 
+
+{{< include 02-what.qmd >}}
+
+{{< include 03-why.qmd >}}
+
+{{< include 04-who.qmd >}}
+
+{{< include 05-how.qmd >}}  
+
+{{< include 06-but-how.qmd >}}
+

@@ -1,0 +1,302 @@
+---
+title: "Healthcare-Associated Infections (HAI) Annual Report"
+date: today
+date-format: "MMMM YYYY"
+toc: true
+toc-depth: 2
+toc-expand: true
+toc-location: left-body
+execute: 
+  echo: false
+  warning: false
+crossref:
+  tbl-title: "**Table**" # Changes prefix to bold
+  title-delim: "**:**"
+format: 
+  html:
+    code-fold: true
+    brand: _brand.yml
+    embed-resources: true
+  docx: default
+  pdf: default
+  typst: default
+params:
+  current_year: "2025"
+  comparison_year: "2024"
+  report_year: "2026"
+  download_year: "2026"
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r}
+#| label: setup
+#| output: false
+
+#load libraries
+library(flextable)
+library(googlesheets4)
+library(dplyr)
+library(glue)
+library(lubridate)
+library(purrr)
+
+# Load functions
+source("../Annual-HAI-Report/functions/flextable_function.R")
+source("../Annual-HAI-Report/functions/tbl_narrative_function.R")
+
+# Read the brand YAML file to set table defaults for tables not using the flextable_function
+brand_data <- yaml::read_yaml("_brand.yaml")
+
+# Extract colors to use in your other chunks
+success_color <- brand_data$color$success
+danger_color <- brand_data$color$danger
+warning_color <- brand_data$color$warning
+primary_color <- brand_data$color$primary
+
+# Set defaults for flextable
+init_flextable_defaults() # Clear any bad state
+set_flextable_defaults(na.string = "--", nan.string = "--",
+                       keep_with_next = TRUE,
+                       bold.header = TRUE,
+                       font.family = brand_data$typography$base,
+                       font.color = brand_data$color$foreground
+)
+
+
+# set up year objects for use in flextable function  
+report_year <- "2026"
+current_year <- "2025"
+comparison_year <- "2024"
+download_year <- "2026"
+```
+
+```{r}
+#| label: load-data-for-tables 
+
+joined_state_combined <- readRDS(file = "../Annual-HAI-Report/output/joined_state_combined")
+joined_state_split <- readRDS(file = "../Annual-HAI-Report/output/joined_state_split")
+joined_org_combined <- readRDS(file = "../Annual-HAI-Report/output/joined_org_combined")
+joined_org_split <- readRDS(file = "../Annual-HAI-Report/output/joined_org_split")
+state_combined <- readRDS(file = "../Annual-HAI-Report/output/state_combined")
+state_split <- readRDS(file = "../Annual-HAI-Report/output/state_split")
+org_combined <- readRDS(file = "../Annual-HAI-Report/output/org_combined")
+org_split <- readRDS(file = "../Annual-HAI-Report/output/org_split")
+dialysis <- readRDS(file = "../Annual-HAI-Report/output/dialysis")
+```
+
+```{r}
+#| label: load-scripts
+
+r_scripts <- list.files(path = "../Annual-HAI-Report/Scripts", pattern = "\\.[Rr]$", full.names = TRUE)
+
+# 3. Source each file into your environment
+invisible(lapply(r_scripts, source))
+
+```
+
+# Colorado state-level data  
+<!--Review results and adjust narrative each year. In line code does not fully account for all possible results as written. Manual edits are required.-->
+## Catheter-associated urinary tract infections (CAUTIs)  
+
+Overall rates of catheter-associated urinary tract infection (CAUTI) in acute care hospitals were `r create_SIR_narrative(agg_CAUTI,factype = "Acute care hospitals")$nat_compare_text` in `r params$current_year`. Rates of CAUTI in adult and pediatric critical care units and inpatient wards in acute care hospitals were `r create_SIR_narrative(agg_CAUTI,factype = "Acute care hospitals, adult and pediatric critical care units")$nat_compare_text`. Rates of CAUTI in long-term acute care hospitals and inpatient rehabilitation facilities were `r create_SIR_narrative(agg_CAUTI,factype = "Long-term acute care hospitals")$nat_compare_text`. Rates of CAUTI in inpatient rehabilitation facilities were `r create_SIR_narrative(agg_CAUTI,factype = "Inpatient rehabilitation facilities")$nat_compare_text`. Rates of CAUTI in all facility types were similar to (not significantly different from) rates from `r params$comparison_year` (@tbl-agg-CAUTI).
+
+```{r}
+#| label: tbl-agg-CAUTI
+#| tbl-cap: !expr glue("**Catheter-associated urinary tract infections in health care facilities by facility or unit type — Colorado, Jan. 1, {params$current_year} - Dec. 31, {params$current_year}**")
+
+create_hai_summary_table(
+  df = agg_CAUTI, 
+  comp_year = comparison_year,
+  denom_type = "catheter-days",
+  suppress_num = 50
+)
+
+```
+
+{{< pagebreak >}} 
+
+## Central line-associated bloodstream infections (CLABSIs)  
+
+Rates of central line-associated bloodstream infection (CLABSI) in acute care hospitals were `r create_SIR_narrative(agg_CLABSI,factype = "Acute care hospitals")$nat_compare_text` in `r params$current_year` overall and in adult and pediatric critical care units and inpatient wards. Rates of CLABSI in inpatient rehabilitation wards and neonatal critical care units within acute care hospitals, inpatient rehabilitation facilities, and neonatal critical care units within freestanding pediatric hospitals were `r create_SIR_narrative(agg_CLABSI,factype = "Acute care hospitals, inpatient rehabilitation wards")$nat_compare_text` in `r params$current_year`. State-level rates of CLABSI in long-term acute care hospitals were not available (@tbl-agg-CLABSI).  
+
+Rates of CLABSI in acute care hospitals overall, adult and pediatric inpatient wards, inpatient rehabilitation wards within acute care hospitals, and neonatal critical care units, and neonatal critical care units within freestanding pediatric hospitals were `r create_SIR_narrative(agg_CLABSI,factype = "Acute care hospitals")$compare_year_text` from `r params$comparison_year`. Rates of CLABSI in adult and pediatric critical care units of acute care hospitals were `r create_SIR_narrative(agg_CLABSI,factype = "Acute care hospitals")$compare_year_text` rates from `r params$comparison_year`. Comparison to rates from `r params$comparison_year` was not available for long-term acute care hospitals (@tbl-agg-CLABSI).  
+
+```{r}
+#| label: tbl-agg-CLABSI
+#| tbl-cap: !expr glue("**Central line-associated bloodstream infections in health care facilities by facility or unit type — Colorado, Jan. 1, {params$current_year} - Dec. 31, {params$current_year}**")
+
+create_hai_summary_table(
+  df = agg_CLABSI, 
+  comp_year = comparison_year,
+  denom_type = "central line-days",
+  suppress_num = 50
+)
+
+
+```
+
+## *Clostridioides difficile* (*C. difficile*) infections  
+
+Rates of *C. difficile* infection in acute care hospitals and inpatient rehabilitation facilities were `r create_SIR_narrative(agg_CDI,factype = "Acute care hospitals")$nat_compare_text` in `r params$current_year`. The rate of *C. difficile* infection in long-term acute care hospitals was `r create_SIR_narrative(agg_CDI,factype = "Long-term acute care hospitals")$nat_compare_text` from `r params$current_year`. Rates of *C. difficile* infection in all facility types were `r create_SIR_narrative(agg_CDI,factype = "Acute care hospitals")$compare_year_text` rates from `r params$comparison_year` (@tbl-agg-CDI).  
+
+```{r}
+#| label: tbl-agg-CDI
+#| tbl-cap: !expr glue("***Clostridioides difficile* infections in health care facilities by facility or unit type — Colorado, Jan. 1, {params$current_year} - Dec. 31, {params$current_year}**" )
+
+create_hai_summary_table(
+  df = agg_CDI, 
+  comp_year = comparison_year,
+  denom_type = "patient-days",
+  suppress_num = 50
+)
+
+```
+
+## Access-related bloodstream infections (ARBSIs)  
+
+In `r params$current_year`, the rate of access-related bloodstream infection (ARBSI) was `r agg_dia[["Infection rate"]]` per 100 person-months (@tbl-agg-dialysis). A pooled national rate was not available for comparison. In `r params$comparison_year`, the rate of ARBSI was 0.22 per 100 person-months. Risk adjustment using the standardized infection ratio (SIR) and statistical testing to compare rates were not available.  
+
+```{r}
+#| label: tbl-agg-dialysis
+#| tbl-cap: !expr glue("**Access-related bloodstream infections in outpatient dialysis facilities — Colorado, Jan. 1, {params$current_year} - Dec. 31, {params$current_year}**")
+
+#can't use create_hai_summary_table because dialysis doesn't have a comparison to previous year
+
+flextable(agg_dia) |>
+  
+    # Alignment
+    align(align = "center", part = "all") |>
+    valign(valign = "center", part = "all") |>
+
+    # Borders
+    border_outer(border = fp_border()) |>
+    border_inner_h(border = fp_border()) |>
+    border_inner_v(border = fp_border()) |>
+  
+  # Apply alternating background color by Facility type
+  bg(i = ~ match(`Facility/unit type`, unique(`Facility/unit type`)) %% 2 == 0, 
+     bg = "#f2f2f2", 
+     part = "body") |>
+  
+  # Relabel values to match CDPHE communications guidance
+    labelizor(j = c("National comparison"),
+              c("not available" = "N/A",
+                "Not significant" = "NS",
+                "not significant" = "NS",
+                "better" = "Better",
+                "worse" = "Worse")) |>
+  
+    # Footnotes
+    add_footer_lines(value = as_paragraph(
+      c("Infection rate is per 100 person-months.",
+        "N/A: not available. Standardized infection ratios (ratio of observed to predicted infection rates) and rate comparisons were not available in NHSN."))) |>
+
+    # Autofit table width
+    set_table_properties(layout = "autofit") |>
+  
+  bold(part = "header")
+
+```
+{{< pagebreak >}} 
+
+## Surgical site infections (SSIs)  
+In `r params$current_year`, in acute care hospitals, rates of surgical site infection (SSI) following inpatient abdominal hysterectomy, breast, colon, hip replacement, and knee replacement surgeries were `r create_SIR_narrative(agg_SSIIP_ACH,factype = "Breast surgery")$nat_compare_text`. Rates of SSI following all surgery types were `r create_SIR_narrative(agg_SSIIP_ACH,factype = "Breast surgery")$compare_year_text` rates from `r params$comparison_year` (@tbl-agg-ACH-SSI-IP).  
+
+In `r params$current_year`, in acute care hospitals, rates of SSI following outpatient breast surgery and hip replacement surgery were `r create_SIR_narrative(agg_SSIOP_ACH,factype = "Breast surgery")$nat_compare_text`. Rates of SSI following outpatient abdominal hysterectomy and knee replacement surgery were `r create_SIR_narrative(agg_SSIOP_ACH,factype = "Hip replacement")$nat_compare_text`. Rates of SSI following all procedure types were `r create_SIR_narrative(agg_SSIOP_ACH,factype = "Breast surgery")$compare_year_text` `r params$comparison_year` (@tbl-agg-ACH-SSI-OP).  
+
+In `r params$current_year`, in critical access hospitals, rates of SSI following inpatient hip replacement surgery was `r create_SIR_narrative(agg_SSIIP_CAH,factype = "Hip replacement")$nat_compare_text`. Rates of SSI following inpatient colon surgery and knee replacement surgery were `r create_SIR_narrative(agg_SSIIP_CAH,factype = "Colon surgery")$nat_compare_text`. Rates of SSI following inpatient colon, hip replacement, and knee replacement surgeries were `r create_SIR_narrative(agg_SSIIP_CAH,factype = "Colon surgery")$compare_year_text` the rates from `r params$comparison_year` (@tbl-agg-CAH-SSI-IP).  
+
+In `r params$current_year`, in critical access hospitals, rates of SSI following outpatient hip and knee replacement were `r create_SIR_narrative(agg_SSIOP_CAH,factype = "Hip replacement")$nat_compare_text` and `r create_SIR_narrative(agg_SSIIP_CAH,factype = "Hip replacement")$compare_year_text` rates from `r params$comparison_year` (@tbl-agg-CAH-SSI-OP).  
+
+In `r params$current_year`, in ambulatory surgery centers, the rate of SSI following knee replacement surgery was `r create_SIR_narrative(agg_SSIOP_ASC,factype = "Knee replacement")$nat_compare_text` (@tbl-agg-ASC-SSI-OP). Rates of SSI following breast and hernia surgery was `r create_SIR_narrative(agg_SSIOP_ASC,factype = "Hernia Surgery")$nat_compare_text`. Rates of SSI following breast, hernia, and knee replacement surgery were `r create_SIR_narrative(agg_SSIOP_ASC,factype = "Knee replacement")$compare_year_text` rates from `r params$comparison_year`.  
+
+```{r}
+#| label: tbl-agg-ACH-SSI-IP
+#| tbl-cap: !expr glue("**Surgical site infections following inpatient surgeries in acute care hospitals — Colorado, Jan. 1, {params$current_year} - Dec. 31, {params$current_year}**")
+
+create_hai_summary_table(
+  df = agg_SSIIP_ACH, 
+  comp_year = comparison_year,
+  denom_type = "procedures",
+  suppress_num = 20
+)
+```
+
+```{r}
+#| label: tbl-agg-ACH-SSI-OP
+#| tbl-cap: !expr glue("**Surgical site infections following outpatient surgeries in acute care hospitals — Colorado, Jan. 1, {params$current_year} - Dec. 31, {params$current_year}**")
+
+create_hai_summary_table(
+  df = agg_SSIOP_ACH, 
+  comp_year = comparison_year,
+  denom_type = "procedures",
+  suppress_num = 20
+)
+
+```
+{{< pagebreak >}} 
+
+```{r}
+#| label: tbl-agg-CAH-SSI-IP
+#| tbl-cap: !expr glue("**Surgical site infections following inpatient surgeries in critical access hospitals — Colorado, Jan. 1, {params$current_year} - Dec. 31, {params$current_year}**")
+
+create_hai_summary_table(
+  df = agg_SSIIP_CAH, 
+  comp_year = comparison_year,
+  denom_type = "procedures",
+  suppress_num = 20
+)
+
+```
+
+```{r}
+#| label: tbl-agg-CAH-SSI-OP
+#| tbl-cap: !expr glue("**Surgical site infections following outpatient surgeries in critical access hospitals — Colorado, Jan. 1, {params$current_year} - Dec. 31, {params$current_year}**")
+
+create_hai_summary_table(
+  df = agg_SSIOP_CAH, 
+  comp_year = comparison_year,
+  denom_type = "procedures",
+  suppress_num = 20
+)
+
+```
+
+```{r}
+#| label: tbl-agg-ASC-SSI-OP
+#| tbl-cap: !expr glue("**Surgical site infections in ambulatory surgery centers — Colorado, Jan. 1, {params$current_year} - Dec. 31, {params$current_year}**")
+
+create_hai_summary_table(
+  df = agg_SSIOP_ASC, 
+  comp_year = comparison_year,
+  denom_type = "procedures",
+  suppress_num = 20
+)
+
+```
+
+{{< pagebreak >}} 
+
+# Colorado facility-specific data  
+
+### Knee replacement surgeries  
+
+#### Ambulatory surgery centers  
+
+`r stringr::str_to_sentence(as.character(english::english(fac_SSIOP_ASC_KPRO |> summarise(count=n_distinct(.data[["Facility name"]])) |> pull(count))))` ambulatory surgery centers reported performing knee replacement surgeries in `r params$current_year` (@tbl-facility-ASC-KPRO-OP). Rates of SSI following knee replacement surgery were suppressed or not available for all, and comparisons to the national baseline were not available. `r stringr::str_to_sentence(as.character(english::english(fac_SSIOP_ASC_KPRO |> filter(.data[["Comparison to last year"]]=="not significant") |> summarise(count=n_distinct(.data[["Facility name"]])) |> pull(count))))` ambulatory surgery centers reported a rate of SSI following knee replacement surgery that was similar to (not significantly different from) the rate from `r params$comparison_year`. Comparison to the rate of SSI following outpatient knee replacement surgery to the rate from `r params$comparison_year` was not available for the remaining facilities.
+
+```{r}
+#| label: tbl-facility-ASC-KPRO-OP
+#| tbl-cap: !expr glue("**Surgical site infections following outpatient knee replacement surgeries in ambulatory surgery centers — Colorado, Jan. 1, {params$current_year} - Dec. 31, {params$current_year}**")
+
+create_hai_summary_table(
+  df = fac_SSIOP_ASC_KPRO |>
+    mutate(`Facility name` = "Redacted"), 
+  comp_year = params$comparison_year,
+  denom_type = "procedures",
+  suppress_num = 20
+) 
+
+```
+

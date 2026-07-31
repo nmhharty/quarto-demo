@@ -1,0 +1,72 @@
+
+## 🧐 Why?
+
+- Reporting is a necessity. The workflow is often put analysis in a report, cycle through multiple iterations, and finally send it off to stakeholders. And then...
+  - You find an error. Why does that error exist?  
+  - You changed a few things last month. Now you want to go back revert one of those changes.  
+  - You need to refresh the analysis months later. You need to repeat your original steps **exactly**.
+
+## 🧐 Why?
+
+- You write lots of reports with similar structure. You already use a template, but you still do a lot of copy-paste.  
+- You want a standard look and feel to your reports but you dislike tedious formatting.  
+- You need to share your analytic workflow with collaborators.  
+- You produce a "clean" final report from your analyses.  
+- You reuse the same analysis in multiple reports.  
+
+# 👀 Example  
+
+## HAI Annual Report Prior State   
+
+- Statutorily mandated annual report, must be sent to state archives and posted publicly    
+- Report must be reviewed by multiple leadership levels and communications  
+- Report is nearly the same each year, just update data  
+- Large tables of data, narrative descriptions of results  
+- [2025 HAI Annual Report](https://drive.google.com/file/d/1gPAnQvCVQaA2C-GBw6eQtdqpxEORCYcP/view)  
+  - Tables generated in R and saved as individual HTML files  
+  - Tables copied into Google Doc  
+  - Narrative summaries written from scratch  
+  - Edits to table formatting applied individually to each table  
+  - Inaccessible formatting  
+  
+## HAI Annual Report Future (Current) State  
+
+- Written entirely in Quarto  
+- Rely upon function for table formatting (including footnote details)  
+- Address accessibility issues across-the-board  
+- Render to multiple formats for editing/reviews and public consumption  
+- Save 75% time in future report writing  
+- Focus on interactive dashboard improvements  
+
+
+## 🧐 Why Quarto? I use R Markdown  
+
+
+**If it ain't broke, don't fix it. R Markdown will be maintained, but no updates.[(Xie 2022)](https://yihui.org/en/2022/04/quarto-r-markdown/)**
+<br>  
+
+**BUT**  
+
+<br>  
+
+::: columns
+::: {.column width="50%"}
+
+### R Markdown
+
+- Requires R, can't code in any other languages  
+- Uses many individual packages to render complete projects  
+- Grew into a large ecosystem, with varying syntax  
+:::
+
+::: {.column width="50%"}
+
+### Quarto
+
+- Supports multiple programming languages with *exact* same approach and syntax  
+- Built-in accessibility features  
+- Quarto 2.0  
+  - Collaborative editor  
+  - Improved visual editor  
+:::
+:::

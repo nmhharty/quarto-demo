@@ -1,0 +1,34 @@
+meta:
+  name: "State of Colorado Report"
+
+logo:
+  medium: images/co_cdphe_div_dcphr_rgb_email.png
+  large: images/co_cdphe_div_dcphr_rgb_email.png
+
+# 2. Color Palette Mapping & Secondary Colors
+# Pulled from standard State of Colorado / CDPHE web branding
+color:
+  # Primary brand color (Dark Blue)
+  primary: "#001970"
+  # Secondary accent (State Slate Gray, often used for borders/secondary UI)
+  secondary: "#5c666f"
+  # State Tree Green (used for success alerts/buttons)
+  success: "#245d38"
+  # State Light Blue/Teal (used for info alerts/accents)
+  info: "#35647e"
+  # State Yellow (used for warnings)
+  warning: "#ffd100"
+  # State Red (used for danger/errors)
+  danger: "#c3002f"
+  # Base background and text colors
+  background: "#ffffff"
+  foreground: "#212529"
+
+# 3. Typography and Fonts
+typography:
+  fonts:
+    - family: "Trebuchet MS"
+      source: system
+  # Apply Trebuchet MS to both body text and headings as requested
+  base: "Trebuchet MS"
+  headings: "Trebuchet MS"

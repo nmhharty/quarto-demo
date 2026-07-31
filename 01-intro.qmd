@@ -1,0 +1,17 @@
+
+## 👋 Hello!
+
+Nicole Harty, public health data by day  
+
+{{< fa brands github >}} [nmhharty](https://github.com/nmhharty)  
+
+Colorado mountain gal by night  
+
+## 🙏 First, some gratitude
+
+- [Jadey Ryan's Talks](https://jadeyryan.com/talks)  
+  - Ryan, Jadey. 2024. “Reproducible Reports and Presentations with Quarto: SLC RUG.” July 1, 2024. https://jadeyryan.com/talks/2024-07-01_slc-rug_quarto/\  
+  - Ryan, Jadey. 2024. “Reproducible Reporting with Quarto.” April 25, 2024. https://jadeyryan.com/talks/2024-04-25_coa-ceds_quarto/  
+
+- [Nicola Rennie's Introduction to Quarto Talk](https://nrennie.rbind.io/training-intro-to-quarto/slides.html)
+
