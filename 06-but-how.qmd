@@ -13,7 +13,7 @@
 
 Use YAML to avoid manually typing out all the options, every time when rendering via the CLI:  
 
-``` {.yaml code-line-numbers="|3|5-6|7-8|9|12|18|22"}
+``` {.yaml code-line-numbers="|3|5-6|7-8|9-11|12-14|18|22-26"}
 
 #| code-overflow: scroll
 ---
@@ -106,7 +106,7 @@ params:                                                           # Set paramete
 
 ## Code: Executed via knitr or jupyter  
 
-````{.qmd  code-line-numbers="|1|2|3|5"}
+````{.qmd  code-line-numbers="|1|2|3|5-15"}
 ```{r}                                                   # create code chunk, specify language    
 #| label: setup                                          # give the code chunk a name, must be unique
 #| output: false                                         # specify execution behavior specific to the code chunk, override document defaults
@@ -127,15 +127,14 @@ source("../Annual-HAI-Report/functions/tbl_narrative_function.R")
 
 ## Code: Executed via knitr or jupyter  
 
-````{.qmd  code-line-numbers="|2|5|10"}
+````{.qmd  code-line-numbers="|2|5-8|9-14"}
 ```{{r}}
 #| label: tbl-agg-CAUTI                                         # start label with "tbl" to denote it's a table ("fig" for figure)
 #| eval: false 
 #| output: false 
 #| tbl-cap: !expr glue("**Catheter-associated urinary tract     # give your table a name, can use markdown syntax for formatting
 infections in health care facilities by facility or unit type  
-— Colorado, Jan. 1, {params$current_year} - Dec. 31,                  
-{params$current_year}**")
+— Colorado, Jan. 1 - Dec. 31, {params$current_year}**")
 
 create_hai_summary_table(                                       # create your table (this uses custom function)   
   df = agg_CAUTI, 
