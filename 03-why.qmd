@@ -1,26 +1,26 @@
 
 ## 🧐 Why?
 
-- Reporting is a necessity. The workflow is often put analysis in a report, cycle through multiple iterations, and finally send it off to stakeholders. And then...
+- Reporting is a necessity. The workflow is often to put analysis in a report, cycle through multiple iterations, and finally send it off to stakeholders. And then...
   - You find an error. Why does that error exist?  
-  - You changed a few things last month. Now you want to go back revert one of those changes.  
+  - You changed a few things last month. Now you want to go back and revert one of those changes.  
   - You need to refresh the analysis months later. You need to repeat your original steps **exactly**.
 
 ## 🧐 Why?
 
-- You write lots of reports with similar structure. You already use a template, but you still do a lot of copy-paste.  
-- You want a standard look and feel to your reports but you dislike tedious formatting.  
-- You need to share your analytic workflow with collaborators.  
-- You produce a "clean" final report from your analyses.  
-- You reuse the same analysis in multiple reports.  
+- You write lots of reports with similar structure. You already use a template, but you still do a lot of copy-paste  
+- You want a standard look and feel to your reports but you dislike tedious formatting  
+- You need to share your analytic workflow with collaborators  
+- You produce a "clean" final report from your analyses  
+- You reuse the same analysis in multiple reports  
 
 # 👀 Example  
 
-## HAI Annual Report Prior State   
+## HAI Annual Report prior state   
 
 - Statutorily mandated annual report, must be sent to state archives and posted publicly    
 - Report must be reviewed by multiple leadership levels and communications  
-- Report is nearly the same each year, just update data  
+- Report is nearly the same each year, just updated data  
 - Large tables of data, narrative descriptions of results  
 - [2025 HAI Annual Report](https://drive.google.com/file/d/1gPAnQvCVQaA2C-GBw6eQtdqpxEORCYcP/view)  
   - Tables generated in R and saved as individual HTML files  
@@ -29,11 +29,11 @@
   - Edits to table formatting applied individually to each table  
   - Inaccessible formatting  
   
-## HAI Annual Report Future (Current) State  
+## HAI Annual Report future (current) state  
 
 - Written entirely in Quarto  
-- Rely upon function for table formatting (including footnote details)  
-- Address accessibility issues across-the-board  
+- Relies upon function for table formatting (including footnote details)  
+- Addresses accessibility issues across-the-board  
 - Render to multiple formats for editing/reviews and public consumption  
 - Save 75% time in future report writing  
 - Focus on interactive dashboard improvements  

@@ -149,7 +149,7 @@ create_hai_summary_table(                                       # create your ta
 
 ## Workflow Note: params
 
-1.  Write report template with default values hard-coded, and then render & review.
+1.  Write report template with default values hard-coded, and then render and review.
 
 2.  Set default `params` key-value pairs in YAML.
 
@@ -174,10 +174,10 @@ create_hai_summary_table(                                       # create your ta
 ## Resources
 
 - [From R Markdown to Quarto](https://mine.quarto.pub/quarto-asa-nashville/): workshop to learn how to apply reproducible authoring skills to the Quarto format and learn about new tools and workflows for authoring with Quarto in RStudio.
-- [Awesome Quarto](https://github.com/mcanouil/awesome-quarto): the most up to date curated list of Quarto® docs, talks, tools, examples & articles the internet has to offer  
+- [Awesome Quarto](https://github.com/mcanouil/awesome-quarto): the most up to date curated list of Quarto® docs, talks, tools, examples, and articles the internet has to offer  
 - [No more copy and paste! Parameterized plots and reports with R and Quarto](https://github.com/nrennie/r-medicine-2026-parameterized-reports): R/Medicine 2026 conference workshop materials  
 - [Parameterized reporting with jupyter engine](https://opensource.posit.co/blog/2025-07-24_parameterized-reports-python/): transform a single Jupyter notebook into a parameterized report generator that automatically creates customized outputs for different scenarios     
 - [posit::conf(2025) Quarto workshop materials](https://opensource.posit.co/blog/2025-10-27_conf-workshops-materials/): materials from two workshops related to Quarto  
-- [PDF Acccessibility and Standards](https://opensource.posit.co/blog/2026-03-05_pdf-accessibility-and-standards/): Quarto 1.9 brings PDF accessibility and standards support, building on new tagging features in LaTeX and Typst  
+- [PDF accessibility and standards](https://opensource.posit.co/blog/2026-03-05_pdf-accessibility-and-standards/): Quarto 1.9 brings PDF accessibility and standards support, building on new tagging features in LaTeX and Typst  
 
 
